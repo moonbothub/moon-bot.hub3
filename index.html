@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoonBot Hub – Copy Trading & AI Bots</title>
+    <style>
+        body {
+            background: #1e1e2a;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #1e1e2a, #2a2a3a);
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin: 0;
+        }
+        .hero p { font-size: 1.2rem; color: #aaa; margin: 20px 0; }
+        .metrics { display: flex; justify-content: center; gap: 40px; margin: 40px 0; }
+        .metric { font-size: 1.5rem; font-weight: 600; color: #4caf50; }
+        .card {
+            background: #2a2a3a;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #333; color: #fff; padding: 12px; }
+        td { border: 1px solid #444; padding: 12px; text-align: left; }
+        .return { color: #4caf50; font-weight: 600; }
+        .price { color: #ef5350; font-weight: 600; }
+        .details { color: #aaa; font-size: 0.9rem; }
+        button, .button {
+            background: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        button:hover, .button:hover { background: #45a049; }
+        .exchanges { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 40px 0; font-size: 1.2rem; font-weight: 600; }
+        .exchanges .binance { color: #ffd700; }
+        .exchanges .kucoin { color: #42a5f5; }
+        .exchanges .okx { color: #4caf50; }
+        .exchanges .bybit { color: #ef5350; }
+        .steps { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; padding: 40px 0; }
+        .step { flex: 1; min-width: 200px; text-align: center; }
+        .step h3 { color: #42a5f5; }
+        #depositPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2a2a3a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+            max-width: 400px;
+        }
+        .close { position: absolute; top: 10px; right: 15px; font-size: 1.5em; cursor: pointer; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1>🌙 MoonBot Hub</h1>
+            <p>Welcome to MoonBot Hub! Automate your crypto trading with AI-powered bots. Copy top strategies, track real-time forecasts, and start earning with ease. Join 500+ traders today!</p>
+            <div class="metrics">
+                <div class="metric">+$1M Profit</div>
+                <div class="metric">500+ Bots</div>
+                <div class="metric">+15% Avg Return</div>
+            </div>
+            <button class="button" onclick="scrollToBots()">Explore Bots</button>
+        </section>
+
+        <section class="card">
+            <h2 style="color: #42a5f5;">Forecasts (BTC/ETH/SOL)</h2>
+            <p>Static prices (BTC: $94,550, ETH: $3,120, SOL: $150)</p>
+        </section>
+
+        <section id="bots" class="card">
+            <h2 style="color: #42a5f5;">Top AI Bots</h2>
+            <table>
+                <tr><th>Bot</th><th>Strategy</th><th>30D Return</th><th>Price</th><th>Details</th><th>Action</th></tr>
+                <tr><td>MoonBot 1</td><td>AI Strategies</td><td class="return">+25%</td><td class="price">$1000</td><td class="details">AI algorithms for MoonBot 1 with high efficiency</td><td><button onclick="showDeposit('MoonBot 1', 1000)">Copy Now</button></td></tr>
+                <tr><td>MoonHub</td><td>DCA Bots</td><td class="return">+18%</td><td class="price">$500</td><td class="details">DCA strategies for MoonHub in volatile markets</td><td><button onclick="showDeposit('MoonHub', 500)">Copy Now</button></td></tr>
+                <tr><td>LunarTrader</td><td>Grid Trading</td><td class="return">+12%</td><td class="price">$20</td><td class="details">Grid bots for LunarTrader buy/sell cycles</td><td><button onclick="showDeposit('LunarTrader', 20)">Copy Now</button></td></tr>
+                <tr><td>AstroBot</td><td>Rule-Based</td><td class="return">+20%</td><td class="price">$500</td><td class="details">Rule-based bots for AstroBot customization</td><td><button onclick="showDeposit('AstroBot', 500)">Copy Now</button></td></tr>
+                <tr><td>CosmoProfit</td><td>Arbitrage</td><td class="return">+30%</td><td class="price">$1000</td><td class="details">Arbitrage bots for CosmoProfit price differences</td><td><button onclick="showDeposit('CosmoProfit', 1000)">Copy Now</button></td></tr>
+                <tr><td>StellarDCA</td><td>Cloud DCA</td><td class="return">+15%</td><td class="price">$20</td><td class="details">Cloud-based DCA bots for StellarDCA setup</td><td><button onclick="showDeposit('StellarDCA', 20)">Copy Now</button></td></tr>
+            </table>
+        </section>
+
+        <section class="steps">
+            <div class="step">
+                <h3>Step 1</h3>
+                <h4 style="color: #e0e0e0;">Connect Exchange</h4>
+                <p>Link your Binance or OKX.</p>
+            </div>
+            <div class="step">
+                <h3>Step 2</h3>
+                <h4 style="color: #e0e0e0;">Browse Bots</h4>
+                <p>Choose top AI strategies.</p>
+            </div>
+            <div class="step">
+                <h3>Step 3</h3>
+                <h4 style="color: #e0e0e0;">Start Copying</h4>
+                <p>Auto-trade and earn.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 style="color: #42a5f5;">Supported Exchanges</h2>
+            <div class="exchanges">
+                <span class="binance">Binance</span>
+                <span class="kucoin">KuCoin</span>
+                <span class="okx">OKX</span>
+                <span class="bybit">Bybit</span>
+            </div>
+            <button class="button">Sign Up Now</button>
+        </section>
+
+        <div id="depositPopup">
+            <span class="close" onclick="hideDeposit()">×</span>
+            <h3 style="color: #42a5f5;">Subscribe to <span id="botName"></span> (<span id="botPrice" class="price"></span>$)</h3>
+            <select id="currency" onchange="updateAddress()">
+                <option value="ETH">ETH</option>
+                <option value="SOL">SOL</option>
+                <option value="BTC">BTC</option>
+                <option value="SUI">SUI</option>
+                <option value="POLYGON">Polygon</option>
+                <option value="BASE">Base</option>
+            </select>
+            <p>Send equivalent to <span id="botPrice2" class="price"></span>$ to:</p>
+            <p id="depositAddress"><strong>Address:</strong> 0xD975D714716909725C97d6c7F50779Eb6E41B1E4</p>
+            <p>After deposit, send tx ID to <a href="mailto:moonbothub@gmail.com" style="color: #ef5350;">moonbothub@gmail.com</a>.</p>
+            <input type="text" id="txId" placeholder="Enter tx ID">
+            <button onclick="sendTxId()">Send tx ID</button>
+        </div>
+    </div>
+
+    <script>
+        function showDeposit(botName, botPrice) {
+            document.getElementById('botName').innerText = botName;
+            document.getElementById('botPrice').innerText = botPrice;
+            document.getElementById('botPrice2').innerText = botPrice;
+            document.getElementById('depositPopup').style.display = 'block';
+            updateAddress();
+        }
+
+        function hideDeposit() {
+            document.getElementById('depositPopup').style.display = 'none';
+        }
+
+        function updateAddress() {
+            const currency = document.getElementById('currency').value;
+            const addresses = {
+                ETH: '0xD975D714716909725C97d6c7F50779Eb6E41B1E4',
+                SOL: '8DvQWUKq69htMsoRnJx11rDdFuDVq9FteG7R1JsMkY7H',
+                BTC: 'bc1qknu8k8j5w4f4v2q8q4v8q8v8q8v8q8v8q8v8q8v8q8v8q8v8q',
+                SUI: '0x1::coin::Coin<0x2::sui::SUI>',
+                POLYGON: '0xD975D714716909725C97d6c7F50779Eb6E41B1E4',
+                BASE: '0xD975D714716909725C97d6c7F50779Eb6E41B1E4'
+            };
+            document.getElementById('depositAddress').innerText = `Address: ${addresses[currency] || 'Invalid currency'}`;
+        }
+
+        function sendTxId() {
+            const txId = document.getElementById('txId').value;
+            if (txId) {
+                alert(`Tx ID ${txId} sent for verification. Check your email for confirmation!`);
+                hideDeposit();
+            } else {
+                alert('Please enter a valid tx ID.');
+            }
+        }
+
+        function scrollToBots() {
+            document.getElementById('bots').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
